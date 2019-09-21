@@ -4,5 +4,5 @@
 
 html, body, .app-container {
   height: 100%;
-  background-color: $lightgray;
+  background-color: lighten($lightgray, 1);
 }

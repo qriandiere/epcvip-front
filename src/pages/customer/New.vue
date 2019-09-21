@@ -1,13 +1,13 @@
 <template>
     <b-container>
         <h1>New customer</h1>
-        <b-form @submit="submit()">
+        <b-form @submit.prevent="submit()">
             <b-form-group
                     label="First name"
             >
                 <b-form-input
                         v-model="customer.firstName"
-                        type="string"
+                        type="text"
                         required
                         placeholder="Enter customer first name"
                         min="2"
@@ -19,7 +19,7 @@
             >
                 <b-form-input
                         v-model="customer.lastName"
-                        type="string"
+                        type="text"
                         required
                         placeholder="Enter customer last name"
                         min="2"
@@ -36,6 +36,21 @@
                         placeholder="Enter customer date of birth"
                 ></b-form-input>
             </b-form-group>
+            <div>
+                <product-new
+                        v-for="(product, index) of customer.products"
+                        :key="`customer-products-${index}`"
+                        @change="customer.products[index] = $event"
+                />
+            </div>
+            <b-btn
+                    variant="secondary"
+                    type="button"
+                    @click="customer.products.push({})"
+                    class="my-2"
+            >
+                Add a product
+            </b-btn>
             <b-btn
                     variant="primary"
                     type="submit"
@@ -48,8 +63,11 @@
 </template>
 
 <script>
+    import ProductNew from "../../components/product/New";
+
     export default {
         name: 'customer-new',
+        components: {ProductNew},
         data: () => ({
             customer: {
                 firstName: null,
@@ -60,7 +78,7 @@
         }),
         methods: {
             submit() {
-
+                this.$store.dispatch('customer/new', this.customer)
             }
         }
     }

@@ -1,53 +1,47 @@
 <template>
-    <b-form @submit="submit()">
+    <b-form
+            class="border p-2 my-2"
+    >
         <b-form-group
-                label="First name"
+                label="Issn"
         >
             <b-form-input
                     v-model="product.issn"
-                    type="string"
+                    type="text"
                     required
                     placeholder="Enter product issn"
                     min="13"
                     max="13"
+                    @input="change()"
             ></b-form-input>
         </b-form-group>
         <b-form-group
-                label="Last name"
+                label="Product name"
         >
             <b-form-input
                     v-model="product.name"
-                    type="string"
+                    type="text"
                     required
                     placeholder="Enter product name"
                     max="255"
+                    @input="change()"
             ></b-form-input>
         </b-form-group>
-        <b-btn
-                variant="primary"
-                type="submit"
-                block
-        >
-            Add
-        </b-btn>
     </b-form>
 </template>
 
 <script>
     export default {
         name: 'product-new',
-        props: {
-            index: Number
-        },
         data: () => ({
             product: {
-                issn: null,
+                issn: 'issn-',
                 name: null
             }
         }),
         methods: {
-            submit() {
-                this.$emit('add_product', {index: this.index, product: this.product})
+            change(){
+                this.$emit('change', this.product)
             }
         }
     }
