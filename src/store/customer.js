@@ -3,25 +3,19 @@ import api from '@/utils/api'
 export default {
     namespaced: true,
     state: {
-        token: null
+        list: []
     },
     mutations: {
-        token(state, token) {
-            state.token = token
+        customers(state, customers) {
+            state.list = JSON.parse(customers)
         }
     },
     actions: {
-        async login({commit}, {username, password}) {
-            const {status, data: token} = await api({
-                'Authorization': 'Basic ' + btoa(username + ':' + password)
-            }).post('authentication/login');
-            if (status === 200) commit('token', token)
+        async list({commit}) {
+            const {status, data: customers} = await api().get('customers')
+            commit('customers', customers)
             return status
-        },
-    },
-    getters: {
-        isAuthenticated(state) {
-            return !!state.token
         }
-    }
+    },
+    getters: {}
 }
