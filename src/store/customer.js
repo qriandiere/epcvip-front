@@ -20,6 +20,10 @@ export default {
             commit('customer', customer)
             return status
         },
+        async edit({commit}, customer) {
+            const {status} = await api().put(`customer/${customer.uuid}`, customer)
+            return {status, id:customer.uuid}
+        },
         async list({commit}) {
             const {status, data: customers} = await api().get('customers')
             commit('customers', customers)

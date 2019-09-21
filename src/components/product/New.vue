@@ -33,12 +33,21 @@
 <script>
     export default {
         name: 'product-new',
+        props: {
+            data: {
+                type: Object,
+                default: null
+            }
+        },
         data: () => ({
             product: {
                 issn: 'issn-',
                 name: null
             }
         }),
+        mounted(){
+            if (this.data) this.product = this.data
+        },
         methods: {
             change(){
                 this.$emit('change', this.product)

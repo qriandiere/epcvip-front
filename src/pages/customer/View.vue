@@ -6,6 +6,7 @@
             <b-btn
                     variant="primary"
                     v-if="isAdmin"
+                    @click="$router.push({name: 'customer-edit', params:{id:customer.uuid}})"
             >
                 Edit
             </b-btn>

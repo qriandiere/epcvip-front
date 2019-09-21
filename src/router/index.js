@@ -39,7 +39,13 @@ const router = new Router({
             name: 'customer-new',
             component: () => import('@/pages/customer/New.vue'),
             beforeEnter: requireAuthGuard
-        }
+        },
+        {
+            path: '/customer/:id(\\d+)/edit',
+            name: 'customer-edit',
+            component: () => import('@/pages/customer/Edit.vue'),
+            beforeEnter: requireAuthGuard
+        },
     ]
 })
 /**
