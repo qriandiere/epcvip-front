@@ -1,0 +1,11 @@
+@import './variables.scss';
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import 'node_modules/bootstrap-vue/src/index.scss';
+
+html, body, .app-container {
+  height: 100%;
+}
+
+h1, h2, h3, h4, h5, p, label, legend {
+  color: $white;
+}

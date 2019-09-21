@@ -6,9 +6,6 @@ Vue.use(Router)
 import requireAuthGuard from './guards/requireAuthGuard'
 import requireGuestGuard from './guards/requireGuestGuard'
 
-/**
- * Application routes
- */
 const router = new Router({
     mode: 'history',
     base: process.env.BASE_URL,
