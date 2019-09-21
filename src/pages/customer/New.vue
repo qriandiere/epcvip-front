@@ -77,8 +77,9 @@
             }
         }),
         methods: {
-            submit() {
-                this.$store.dispatch('customer/new', this.customer)
+            async submit() {
+                const {id} = await this.$store.dispatch('customer/new', this.customer)
+                await this.$router.push({name: 'customer', params: {id}})
             }
         }
     }

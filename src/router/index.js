@@ -29,6 +29,12 @@ const router = new Router({
             beforeEnter: requireAuthGuard
         },
         {
+            path: '/customer/:id(\\d+)',
+            name: 'customer',
+            component: () => import('@/pages/customer/View.vue'),
+            beforeEnter: requireAuthGuard
+        },
+        {
             path: '/customer/new',
             name: 'customer-new',
             component: () => import('@/pages/customer/New.vue'),
@@ -39,8 +45,8 @@ const router = new Router({
 /**
  * Error routes
  */
-router.addRoutes([
-    {path: '*', name: '404', redirect: {name: 'home'}}
-])
+// router.addRoutes([
+//     {path: '*', name: '404', redirect: {name: 'home'}}
+// ])
 
 export default router
