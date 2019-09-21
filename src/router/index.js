@@ -28,6 +28,12 @@ const router = new Router({
             component: () => import('@/pages/customer/List.vue'),
             beforeEnter: requireAuthGuard
         },
+        {
+            path: '/customer/new',
+            name: 'customer-new',
+            component: () => import('@/pages/customer/New.vue'),
+            beforeEnter: requireAuthGuard
+        }
     ]
 })
 /**

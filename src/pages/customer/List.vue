@@ -9,6 +9,9 @@
                 bordered
                 fixed
         />
+        <b-btn @click="$router.push({name: 'customer-new'})">
+            Add a customer
+        </b-btn>
     </b-container>
 </template>
 
@@ -20,15 +23,17 @@
         },
         computed: {
             customers() {
-                const customers = this.$store.state.customer.list
-                return customers.map((c) => {
+                const customers = []
+                //@todo dont mutate store
+                this.$store.state.customer.list.forEach((c)=>{
                     c.dateOfBirth = this.date(c.dateOfBirth)
                     c.createdAt = this.date(c.createdAt)
                     c.updatedAt = c.updatedAt === null ? '-' : date(c.updatedAt)
                     c.products = c.products.length
                     delete c.author
-                    return c
+                    customers.push(c)
                 })
+                return customers
             }
         },
         methods: {
