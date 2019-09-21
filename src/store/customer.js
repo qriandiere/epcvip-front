@@ -29,6 +29,14 @@ export default {
             const body = JSON.stringify(customer)
             const {status, data: id} = await api().post('customer', body)
             return {id, status}
+        },
+        async status({commit}, {id, transition}) {
+            const {status} = await api().post(`customer/${id}/status?transition=${transition}`)
+            return {status}
+        },
+        async delete({commit}, id) {
+            const {status} = await api().delete(`customer/${id}`)
+            return status
         }
     },
     getters: {}

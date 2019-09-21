@@ -36,6 +36,9 @@ export default {
     getters: {
         isAuthenticated(state) {
             return !!state.token
-        }
+        },
+        isReviewer: state => user => user.roles.includes('ROLE_REVIEWER') || user.roles.includes('ROLE_ADMIN'),
+        isAdmin: state => user => user.roles.includes('ROLE_ADMIN'),
+
     }
 }
