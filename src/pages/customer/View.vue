@@ -6,6 +6,7 @@
             <b-btn
                     variant="primary"
                     v-if="isAdmin"
+                    class="mx-1"
                     @click="$router.push({name: 'customer-edit', params:{id:customer.uuid}})"
             >
                 Edit
@@ -13,6 +14,7 @@
             <b-btn
                     variant="danger"
                     v-if="isAdmin || user.id === customer.author.id"
+                    class="mx-1"
                     @click="remove()"
             >
                 Delete
@@ -21,6 +23,7 @@
                 <b-btn
                         variant="primary"
                         v-if="customer.status === 'pending'"
+                        class="mx-1"
                         @click="changeStatus('reviewing')"
                 >
                     Review
@@ -29,12 +32,14 @@
                     <b-btn
                             variant="primary"
                             @click="changeStatus('approval')"
+                            class="mx-1"
                     >
                         Approve
                     </b-btn>
                     <b-btn
                             variant="danger"
                             @click="changeStatus('disapproval')"
+                            class="mx-1"
                     >
                         Disapprove
                     </b-btn>

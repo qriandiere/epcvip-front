@@ -56,7 +56,8 @@
                 type="submit"
                 block
         >
-            Create
+            <template v-if="!data">Create</template>
+            <template v-else>Save changes</template>
         </b-btn>
     </b-form>
 </template>

@@ -14,7 +14,7 @@ export default {
     mutations: {
         customer(state, customer) {
             state.customer = JSON.parse(customer)
-            state.customer.products = state.customer.products.map((p)=>{
+            state.customer.products = state.customer.products.map((p) => {
                 delete p.author
                 p.modifiedAt = p.modifiedAt ? date(p.modifiedAt) : '-'
                 p.createdAt = date(p.createdAt)
@@ -39,8 +39,7 @@ export default {
             return status
         },
         async edit({commit}, customer) {
-            const {status} = await api().put(`customer/${customer.uuid}`, customer)
-            return {status, id: customer.uuid}
+            return api().put(`customer/${customer.uuid}`, customer)
         },
         async list({commit}) {
             const {status, data: customers} = await api().get('customers')
@@ -49,8 +48,7 @@ export default {
         },
         async new({commit}, customer) {
             const body = JSON.stringify(customer)
-            const {status, data: id} = await api().post('customer', body)
-            return {id, status}
+            return await api().post('customer', body)
         },
         async status({commit}, {id, transition}) {
             const {status} = await api().post(`customer/${id}/status?transition=${transition}`)

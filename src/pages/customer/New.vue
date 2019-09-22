@@ -1,6 +1,12 @@
 <template>
     <b-container>
         <h1>New customer</h1>
+        <b-alert
+                :show="error"
+                variant="danger"
+        >
+            {{error}}
+        </b-alert>
         <customer-form
                 @submit="submit($event)"
         />
@@ -9,13 +15,18 @@
 
 <script>
     import CustomerForm from "../../components/customer/Form";
+
     export default {
         name: 'customer-new',
         components: {CustomerForm},
+        data: () => ({
+            error: null
+        }),
         methods: {
             async submit(customer) {
-                const {id} = await this.$store.dispatch('customer/new', customer)
-                await this.$router.push({name: 'customer', params: {id}})
+                const response = await this.$store.dispatch('customer/new', customer)
+                if (response.status === 200) await this.$router.push({name: 'customer', params: {id: response.id}})
+                else this.error = response.message
             }
         }
     }
