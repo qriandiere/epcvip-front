@@ -19,19 +19,27 @@ export default {
         restore(state){
             state.user = JSON.parse(localStorage.getItem(LOCALSTORAGE_USER))
             state.token = localStorage.getItem(LOCALSTORAGE_TOKEN)
+        },
+        clear(state){
+            state.user = null
+            state.token = null
+            localStorage.clear()
         }
     },
     actions: {
         async login({commit}, {username, password}) {
-            const {status, data: {user, token}} = await api({
+            const response = await api({
                 'Authorization': 'Basic ' + btoa(username + ':' + password)
             }).post('authentication/login');
-            if (status === 200) {
-                commit('user', user)
-                commit('token', token)
+            if (response.status === 200) {
+                commit('user', response.data.user)
+                commit('token', response.data.token)
             }
-            return status
+            return response
         },
+        logout({commit}){
+            commit('clear')
+        }
     },
     getters: {
         isAuthenticated(state) {

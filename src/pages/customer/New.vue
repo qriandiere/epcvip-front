@@ -1,16 +1,17 @@
 <template>
     <b-container>
         <h1>New customer</h1>
-        <customer-new
+        <customer-form
                 @submit="submit($event)"
         />
     </b-container>
 </template>
 
 <script>
+    import CustomerForm from "../../components/customer/Form";
     export default {
         name: 'customer-new',
-        components: {},
+        components: {CustomerForm},
         methods: {
             async submit(customer) {
                 const {id} = await this.$store.dispatch('customer/new', customer)

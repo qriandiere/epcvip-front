@@ -1,8 +1,13 @@
 <template>
     <div class="bg-dark h-100 d-flex justify-content-around align-items-center">
         <img src="/logo.png" alt="logo"/>
-        <b-form class="border p-5 w-50" @submit.prevent="login()">
-            <b-alert v-if="error" variant="danger">{{error}}</b-alert>
+        <b-form class="w-50 login-form" @submit.prevent="login()">
+            <b-alert
+                    variant="danger"
+                    :show="user.error !== null"
+            >
+                {{user.error}}
+            </b-alert>
             <b-form-group label="Enter your username">
                 <b-form-input
                         v-model="user.username"
@@ -29,16 +34,24 @@
         data: () => ({
             user: {
                 username: null,
-                password: null
+                password: null,
+                error: null
             },
-            error: null
         }),
         methods: {
             async login() {
-                const status = await this.$store.dispatch('user/login', this.user)
-                if (status === 200) await this.$router.push({name: 'home'})
-                else this.error = 'Invalid credentials. Please try again with a different username or password.'
+                this.user.error = null
+                const response = await this.$store.dispatch('user/login', this.user)
+                if (response.status === 200) await this.$router.push({name: 'home'})
+                else this.user.error = response.message
             }
         }
     }
 </script>
+<style lang="scss">
+    .login-form {
+        legend {
+            color: white !important;
+        }
+    }
+</style>

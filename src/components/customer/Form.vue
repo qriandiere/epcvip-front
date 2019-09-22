@@ -38,8 +38,9 @@
             <product-new
                     v-for="(product, index) of customer.products"
                     :key="`customer-products-${index}`"
-                    :data="customer.products[index]"
+                    :data="data ? customer.products[index] : null"
                     @change="customer.products[index] = $event"
+                    @remove="removeProduct(index)"
             />
         </div>
         <b-btn
@@ -61,10 +62,10 @@
 </template>
 
 <script>
-    import ProductNew from "../product/New";
+    import ProductNew from "../product/Form";
 
     export default {
-        name: 'customer-new',
+        name: 'customer-form',
         components: {ProductNew},
         props: {
             data: {
@@ -91,10 +92,15 @@
                 firstName: null,
                 lastName: null,
                 dateOfBirth: null,
-                products: []
+                products: [],
             }
         }),
         methods: {
+            removeProduct(index) {
+                this.customer.products = this.customer.products.filter((p, i) => {
+                    return i !== index
+                })
+            },
             date(date) {
                 date = new Date(date.date)
                 return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`

@@ -66,12 +66,7 @@
                 return this.$store.state.customer.customer
             },
             products() {
-                return this.customer.products.map((p) => {
-                    delete p.author
-                    p.modifiedAt = p.modifiedAt ? this.date(p.modifiedAt) : '-'
-                    p.createdAt = this.date(p.createdAt)
-                    return p
-                })
+                return this.customer.products
             },
             user() {
                 return this.$store.state.user.user

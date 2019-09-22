@@ -1,5 +1,10 @@
 import api from '@/utils/api'
 
+function date(date) {
+    date = new Date(date.date)
+    return `${date.getMonth()}-${date.getDate()}-${date.getFullYear()}`
+}
+
 export default {
     namespaced: true,
     state: {
@@ -9,9 +14,22 @@ export default {
     mutations: {
         customer(state, customer) {
             state.customer = JSON.parse(customer)
+            state.customer.products = state.customer.products.map((p)=>{
+                delete p.author
+                p.modifiedAt = p.modifiedAt ? date(p.modifiedAt) : '-'
+                p.createdAt = date(p.createdAt)
+                return p
+            })
         },
         customers(state, customers) {
-            state.list = JSON.parse(customers)
+            state.list = JSON.parse(customers).map((c) => {
+                c.dateOfBirth = date(c.dateOfBirth)
+                c.createdAt = date(c.createdAt)
+                c.updatedAt = c.updatedAt === null ? '-' : date(c.updatedAt)
+                c.products = c.products.length
+                delete c.author
+                return c
+            })
         }
     },
     actions: {
@@ -22,7 +40,7 @@ export default {
         },
         async edit({commit}, customer) {
             const {status} = await api().put(`customer/${customer.uuid}`, customer)
-            return {status, id:customer.uuid}
+            return {status, id: customer.uuid}
         },
         async list({commit}) {
             const {status, data: customers} = await api().get('customers')

@@ -18,8 +18,10 @@ const api = function (headers = null) {
             window.localStorage.clear();
             location.reload();
         }
-        //@todo error handler
-        return Promise.reject(e)
+        return {
+            status: e.request.status,
+            message: JSON.parse(e.request.response).message
+        }
     });
     return requester;
 };

@@ -1,7 +1,7 @@
 <template>
     <b-container>
         <h1>New customer</h1>
-        <customer-new
+        <customer-form
                 v-if="customer"
                 @submit="submit($event)"
                 :data="customer"
@@ -10,10 +10,10 @@
 </template>
 
 <script>
-    import CustomerNew from "../../components/customer/New";
+    import CustomerForm from "../../components/customer/Form";
     export default {
         name: 'customer-edit',
-        components: {CustomerNew},
+        components: {CustomerForm},
         async mounted() {
             await this.$store.dispatch('customer/get', this.$route.params.id)
         },

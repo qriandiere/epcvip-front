@@ -1,5 +1,6 @@
 <template>
     <b-container>
+        <h1>Customers</h1>
         <b-table
                 :items="customers"
                 primary-key="uuid"
@@ -8,8 +9,13 @@
                 small
                 bordered
                 fixed
+                responsive="sm"
+                @row-clicked="$router.push({name: 'customer',  params:{id: $event.uuid}})"
         />
-        <b-btn @click="$router.push({name: 'customer-new'})">
+        <b-btn
+                @click="$router.push({name: 'customer-new'})"
+                variant="primary"
+        >
             Add a customer
         </b-btn>
     </b-container>
@@ -21,19 +27,10 @@
         async mounted() {
             await this.$store.dispatch('customer/list')
         },
+        data: () => ({}),
         computed: {
             customers() {
-                const customers = []
-                //@todo dont mutate store
-                this.$store.state.customer.list.forEach((c)=>{
-                    c.dateOfBirth = this.date(c.dateOfBirth)
-                    c.createdAt = this.date(c.createdAt)
-                    c.updatedAt = c.updatedAt === null ? '-' : date(c.updatedAt)
-                    c.products = c.products.length
-                    delete c.author
-                    customers.push(c)
-                })
-                return customers
+                return this.$store.state.customer.list
             }
         },
         methods: {

@@ -1,7 +1,14 @@
 <template>
     <b-form
-            class="border p-2 my-2"
+            class="p-2 my-2 border"
     >
+        <b-btn
+                @click="$emit('remove')"
+                variant="link"
+                class="text-danger"
+        >
+            Remove product
+        </b-btn>
         <b-form-group
                 label="Issn"
         >
@@ -32,7 +39,7 @@
 
 <script>
     export default {
-        name: 'product-new',
+        name: 'product-form',
         props: {
             data: {
                 type: Object,
@@ -45,11 +52,11 @@
                 name: null
             }
         }),
-        mounted(){
+        mounted() {
             if (this.data) this.product = this.data
         },
         methods: {
-            change(){
+            change() {
                 this.$emit('change', this.product)
             }
         }
