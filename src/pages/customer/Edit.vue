@@ -35,7 +35,7 @@
         methods: {
             async submit(customer) {
                 const response = await this.$store.dispatch('customer/edit', customer)
-                if (response.status === 200) await this.$router.push({name: 'customer', params: {id: response.id}})
+                if (response.status === 200) await this.$router.push({name: 'customer', params: {id: response.data}})
                 else this.error = response.message
             }
         }
